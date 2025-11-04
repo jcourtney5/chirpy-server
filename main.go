@@ -8,10 +8,17 @@ import (
 // to run: go build -o out && ./out
 
 func main() {
-	// create the server
+	const filepathRoot = "."
+	const port = "8080"
+
 	mux := http.NewServeMux()
-	server := http.Server{
-		Addr:    ":8080",
+
+	// add our handlers
+	mux.Handle("/", http.FileServer(http.Dir(filepathRoot)))
+
+	// create our server
+	server := &http.Server{
+		Addr:    ":" + port,
 		Handler: mux,
 	}
 
