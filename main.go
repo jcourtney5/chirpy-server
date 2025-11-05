@@ -14,7 +14,8 @@ func main() {
 	mux := http.NewServeMux()
 
 	// add our handlers
-	mux.Handle("/", http.FileServer(http.Dir(filepathRoot)))
+	mux.Handle("/app/", http.StripPrefix("/app/", http.FileServer(http.Dir(filepathRoot))))
+	mux.HandleFunc("/healthz", healthHandler)
 
 	// create our server
 	server := &http.Server{
@@ -26,5 +27,23 @@ func main() {
 	err := server.ListenAndServe()
 	if err != nil {
 		fmt.Printf("Server failed to start: %v\n", err)
+	}
+}
+
+// health endpoint handler function
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	// Supports any HTTP method
+
+	// Add headers
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+
+	// Set result to 200 OK
+	w.WriteHeader(http.StatusOK)
+
+	// Write OK as the response
+	_, err := w.Write([]byte("OK"))
+	if err != nil {
+		http.Error(w, "Failed to write response", http.StatusInternalServerError)
+		return
 	}
 }
