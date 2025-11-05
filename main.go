@@ -15,7 +15,7 @@ func main() {
 
 	// add our handlers
 	mux.Handle("/app/", http.StripPrefix("/app/", http.FileServer(http.Dir(filepathRoot))))
-	mux.HandleFunc("/healthz", healthHandler)
+	mux.HandleFunc("/healthz", handlerHealth)
 
 	// create our server
 	server := &http.Server{
@@ -31,7 +31,7 @@ func main() {
 }
 
 // health endpoint handler function
-func healthHandler(w http.ResponseWriter, r *http.Request) {
+func handlerHealth(w http.ResponseWriter, r *http.Request) {
 	// Supports any HTTP method
 
 	// Add headers
@@ -41,7 +41,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 
 	// Write OK as the response
-	_, err := w.Write([]byte("OK"))
+	_, err := w.Write([]byte(http.StatusText(http.StatusOK)))
 	if err != nil {
 		http.Error(w, "Failed to write response", http.StatusInternalServerError)
 		return
