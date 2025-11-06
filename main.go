@@ -19,12 +19,16 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	// add our handlers
+	// main file server handler
 	fileServerHandler := http.StripPrefix("/app/", http.FileServer(http.Dir(filepathRoot)))
 	mux.Handle("/app/", apiCfg.middlewareMetricsInc(fileServerHandler))
+
+	// api handlers
 	mux.HandleFunc("GET /api/healthz", handlerHealth)
-	mux.HandleFunc("GET /api/metrics", apiCfg.handlerMetrics)
-	mux.HandleFunc("POST /api/reset", apiCfg.handlerReset)
+
+	// admin handlers
+	mux.HandleFunc("GET /admin/metrics", apiCfg.handlerMetrics)
+	mux.HandleFunc("POST /admin/reset", apiCfg.handlerReset)
 
 	// create our server
 	server := &http.Server{
