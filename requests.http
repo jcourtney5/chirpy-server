@@ -8,6 +8,20 @@ GET http://localhost:8080/app/assets/logo.png
 ### GET healthz
 GET http://localhost:8080/api/healthz
 
+### POST validate_chirp less than 140 chars
+POST http://localhost:8080/api/validate_chirp
+
+{
+  "body": "This is an opinion I need to share with the world"
+}
+
+### POST validate_chirp more than 140 chars
+POST http://localhost:8080/api/validate_chirp
+
+{
+  "body": "This is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp"
+}
+
 ### GET metrics
 GET http://localhost:8080/admin/metrics
 
