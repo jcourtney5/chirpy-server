@@ -1,0 +1,15 @@
+
+### GET index.html
+GET http://localhost:8080/app/
+
+### GET logo.png
+GET http://localhost:8080/app/assets/logo.png
+
+### GET healthz
+GET http://localhost:8080/api/healthz
+
+### GET metrics
+GET http://localhost:8080/admin/metrics
+
+### POST reset
+POST http://localhost:8080/admin/reset
