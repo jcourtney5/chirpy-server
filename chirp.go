@@ -11,7 +11,7 @@ func handlerValidateChirp(w http.ResponseWriter, r *http.Request) {
 		Body string `json:"body"`
 	}
 	type validResponse struct {
-		Valid bool `json:"valid"`
+		CleanedBody string `json:"cleaned_body"`
 	}
 
 	decoder := json.NewDecoder(r.Body)
@@ -22,11 +22,15 @@ func handlerValidateChirp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// check max length
 	const maxChirpLength = 140
 	if len(params.Body) > maxChirpLength {
 		responseWithError(w, http.StatusBadRequest, "Chirp is too long", nil)
 		return
 	}
 
-	responseWithJSON(w, http.StatusOK, validResponse{Valid: true})
+	// remove words that are not allowed
+	cleanedBody := wordCleaner(params.Body)
+
+	responseWithJSON(w, http.StatusOK, validResponse{CleanedBody: cleanedBody})
 }

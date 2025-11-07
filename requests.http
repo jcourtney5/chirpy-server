@@ -12,7 +12,7 @@ GET http://localhost:8080/api/healthz
 POST http://localhost:8080/api/validate_chirp
 
 {
-  "body": "This is an opinion I need to share with the world"
+  "body": "This is a kerfuffle opinion I need to share with the world"
 }
 
 ### POST validate_chirp more than 140 chars
