@@ -1,8 +1,14 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	"github.com/jcourtney5/chirpy-server/internal/database"
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
+	"log"
 	"net/http"
+	"os"
 	"sync/atomic"
 )
 
@@ -17,8 +23,26 @@ func main() {
 	const filepathRoot = "."
 	const port = "8080"
 
+	// load .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalf("Error loading .env file: %v", err)
+	}
+
+	// load our env variables
+	dbURL := os.Getenv("DB_URL")
+
+	// connect to the db
+	db, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		log.Fatalf("Error connecting to database: %v", err)
+	}
+	defer db.Close()
+	dbQueries := database.New(db)
+
 	apiCfg := apiConfig{
 		fileserverHits: atomic.Int32{},
+		db:             dbQueries,
 	}
 
 	mux := http.NewServeMux()
@@ -42,7 +66,7 @@ func main() {
 	}
 
 	fmt.Println("Starting HTTP server at port 8080")
-	err := server.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		fmt.Printf("Server failed to start: %v\n", err)
 	}
