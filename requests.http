@@ -27,3 +27,10 @@ GET http://localhost:8080/admin/metrics
 
 ### POST reset
 POST http://localhost:8080/admin/reset
+
+### POST /api/users
+POST http://localhost:8080/api/users
+
+{
+  "email": "user3@test.com"
+}

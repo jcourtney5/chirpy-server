@@ -3,13 +3,14 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	"github.com/jcourtney5/chirpy-server/internal/database"
-	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
 	"log"
 	"net/http"
 	"os"
 	"sync/atomic"
+
+	"github.com/jcourtney5/chirpy-server/internal/database"
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 // sql: postgres://jessecourtney:@localhost:5432/chirpy?sslmode=disable
@@ -18,6 +19,14 @@ import (
 
 // to run: go build -o out && ./out
 //     or: go run .
+
+const platformDev = "dev"
+
+type apiConfig struct {
+	fileserverHits atomic.Int32
+	db             *database.Queries
+	platform       string
+}
 
 func main() {
 	const filepathRoot = "."
@@ -31,6 +40,13 @@ func main() {
 
 	// load our env variables
 	dbURL := os.Getenv("DB_URL")
+	if dbURL == "" {
+		log.Fatal("DB_URL must be set")
+	}
+	platform := os.Getenv("PLATFORM")
+	if platform == "" {
+		log.Fatal("PLATFORM must be set")
+	}
 
 	// connect to the db
 	db, err := sql.Open("postgres", dbURL)
@@ -43,6 +59,7 @@ func main() {
 	apiCfg := apiConfig{
 		fileserverHits: atomic.Int32{},
 		db:             dbQueries,
+		platform:       platform,
 	}
 
 	mux := http.NewServeMux()
@@ -54,6 +71,7 @@ func main() {
 	// api handlers
 	mux.HandleFunc("GET /api/healthz", handlerHealth)
 	mux.HandleFunc("POST /api/validate_chirp", handlerValidateChirp)
+	mux.HandleFunc("POST /api/users", apiCfg.handlerUsersCreate)
 
 	// admin handlers
 	mux.HandleFunc("GET /admin/metrics", apiCfg.handlerMetrics)
