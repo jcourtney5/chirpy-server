@@ -8,20 +8,6 @@ GET http://localhost:8080/app/assets/logo.png
 ### GET healthz
 GET http://localhost:8080/api/healthz
 
-### POST validate_chirp less than 140 chars
-POST http://localhost:8080/api/validate_chirp
-
-{
-  "body": "This is a kerfuffle opinion I need to share with the world"
-}
-
-### POST validate_chirp more than 140 chars
-POST http://localhost:8080/api/validate_chirp
-
-{
-  "body": "This is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp"
-}
-
 ### GET metrics
 GET http://localhost:8080/admin/metrics
 
@@ -32,5 +18,29 @@ POST http://localhost:8080/admin/reset
 POST http://localhost:8080/api/users
 
 {
-  "email": "user3@test.com"
+  "email": "user1@test.com"
+}
+
+### POST /api/chirps valid
+POST http://localhost:8080/api/chirps
+
+{
+  "body": "Hello, world!",
+  "user_id": "95a23ee1-4a82-4af4-b191-d928934aebdb"
+}
+
+### POST /api/chirps valid with word that get censored
+POST http://localhost:8080/api/chirps
+
+{
+  "body": "This is a kerfuffle opinion I need to share with the world",
+  "user_id": "95a23ee1-4a82-4af4-b191-d928934aebdb"
+}
+
+### POST validate_chirp invalid, too long
+POST http://localhost:8080/api/chirps
+
+{
+  "body": "This is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp",
+  "user_id": "7c64575e-2cec-41c3-9aeb-b4a778ac816e"
 }

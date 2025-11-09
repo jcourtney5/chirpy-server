@@ -70,8 +70,9 @@ func main() {
 
 	// api handlers
 	mux.HandleFunc("GET /api/healthz", handlerHealth)
-	mux.HandleFunc("POST /api/validate_chirp", handlerValidateChirp)
+	mux.HandleFunc("POST /api/validate_chirp", apiCfg.handlerChirpsCreate)
 	mux.HandleFunc("POST /api/users", apiCfg.handlerUsersCreate)
+	mux.HandleFunc("POST /api/chirps", apiCfg.handlerChirpsCreate)
 
 	// admin handlers
 	mux.HandleFunc("GET /admin/metrics", apiCfg.handlerMetrics)
