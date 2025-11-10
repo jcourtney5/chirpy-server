@@ -15,3 +15,9 @@ SELECT * FROM chirps
 ORDER BY created_at ASC
 LIMIT 200;
 --
+
+-- name: GetChirp :one
+SELECT * FROM chirps
+WHERE id = $1
+LIMIT 1;
+--

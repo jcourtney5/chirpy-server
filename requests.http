@@ -1,28 +1,29 @@
+@baseUrl = http://localhost:8080
 
 ### GET index.html
-GET http://localhost:8080/app/
+GET {{baseUrl}}/app/
 
 ### GET logo.png
-GET http://localhost:8080/app/assets/logo.png
+GET {{baseUrl}}/app/assets/logo.png
 
 ### GET healthz
-GET http://localhost:8080/api/healthz
+GET {{baseUrl}}/api/healthz
 
 ### GET metrics
-GET http://localhost:8080/admin/metrics
+GET {{baseUrl}}/admin/metrics
 
 ### POST reset
-POST http://localhost:8080/admin/reset
+POST {{baseUrl}}/admin/reset
 
 ### POST /api/users
-POST http://localhost:8080/api/users
+POST {{baseUrl}}/api/users
 
 {
   "email": "user1@test.com"
 }
 
 ### POST /api/chirps valid
-POST http://localhost:8080/api/chirps
+POST {{baseUrl}}/api/chirps
 
 {
   "body": "Hello, world!",
@@ -30,7 +31,7 @@ POST http://localhost:8080/api/chirps
 }
 
 ### POST /api/chirps valid with word that get censored
-POST http://localhost:8080/api/chirps
+POST {{baseUrl}}/api/chirps
 
 {
   "body": "This is a kerfuffle opinion I need to share with the world",
@@ -38,12 +39,16 @@ POST http://localhost:8080/api/chirps
 }
 
 ### POST validate_chirp invalid, too long
-POST http://localhost:8080/api/chirps
+POST {{baseUrl}}/api/chirps
 
 {
   "body": "This is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp",
   "user_id": "7c64575e-2cec-41c3-9aeb-b4a778ac816e"
 }
 
-### GET /api/chirps
-GET http://localhost:8080/api/chirps
+### GET all chirps
+GET {{baseUrl}}/api/chirps
+
+### GET single chirp
+@chirpID = 024ac29d-1647-4d1e-9f48-a700d49fbccb
+GET {{baseUrl}}/api/chirps/{{chirpID}}
