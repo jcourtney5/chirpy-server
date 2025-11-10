@@ -9,3 +9,9 @@ VALUES (
 )
 RETURNING *;
 --
+
+-- name: GetChirps :many
+SELECT * FROM chirps
+ORDER BY created_at ASC
+LIMIT 200;
+--

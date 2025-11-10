@@ -44,3 +44,6 @@ POST http://localhost:8080/api/chirps
   "body": "This is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp, this is a long chirp",
   "user_id": "7c64575e-2cec-41c3-9aeb-b4a778ac816e"
 }
+
+### GET /api/chirps
+GET http://localhost:8080/api/chirps
