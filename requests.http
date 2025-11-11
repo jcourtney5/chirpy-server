@@ -19,7 +19,16 @@ POST {{baseUrl}}/admin/reset
 POST {{baseUrl}}/api/users
 
 {
-  "email": "user1@test.com"
+  "email": "user2@test.com",
+  "password": "password456"
+}
+
+### Login
+POST {{baseUrl}}/api/login
+
+{
+  "email": "user2@test.com",
+  "password": "password456"
 }
 
 ### POST /api/chirps valid
