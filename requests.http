@@ -28,15 +28,16 @@ POST {{baseUrl}}/api/login
 
 {
   "email": "user2@test.com",
-  "password": "password456"
+  "password": "password456",
+  "expires_in_seconds": 1800
 }
 
 ### POST /api/chirps valid
 POST {{baseUrl}}/api/chirps
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGlycHktYWNjZXNzIiwic3ViIjoiNmUxMWU3YTktMmU2ZC00NmU5LThlNWQtZjI5OGUwMjI1MGRiIiwiZXhwIjoxNzYyOTI2MzcxLCJpYXQiOjE3NjI5MjQ1NzF9.4xGR8LNs-W4qTAJICvIeluvN8hcUEIarElwxKatxTaI
 
 {
-  "body": "Hello, world!",
-  "user_id": "95a23ee1-4a82-4af4-b191-d928934aebdb"
+  "body": "Hello, world 777"
 }
 
 ### POST /api/chirps valid with word that get censored
