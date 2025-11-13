@@ -33,15 +33,15 @@ POST {{baseUrl}}/api/login
 
 ### Refresh
 POST {{baseUrl}}/api/refresh
-Authorization: Bearer 666d1405f38581ddc81cd05d60e1a935d1aaf3a6f308d78eb88f24c75cc3c635
+Authorization: Bearer <token>
 
 ### Revoke
 POST {{baseUrl}}/api/revoke
-Authorization: Bearer 666d1405f38581ddc81cd05d60e1a935d1aaf3a6f308d78eb88f24c75cc3c635
+Authorization: Bearer <token>
 
 ### POST /api/chirps valid
 POST {{baseUrl}}/api/chirps
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaGlycHktYWNjZXNzIiwic3ViIjoiYWJiYmQ4N2MtMDJjNC00NjY2LTk1MGYtNDA2MjhiNTFlMGRmIiwiZXhwIjoxNzYzMDE1OTgzLCJpYXQiOjE3NjMwMTIzODN9.AYEdCSySOK2STv-IF9pHSg508Ij9UFBHwoQ-jfleuUI
+Authorization: Bearer <token>
 
 {
   "body": "Hello, world 111"
