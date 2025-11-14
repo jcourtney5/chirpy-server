@@ -19,16 +19,25 @@ POST {{baseUrl}}/admin/reset
 POST {{baseUrl}}/api/users
 
 {
-  "email": "user2@test.com",
-  "password": "password456"
+  "email": "user1@test.com",
+  "password": "password1"
+}
+
+### Update User
+PUT {{baseUrl}}/api/users
+Authorization: Bearer <token>
+
+{
+  "email": "user1_modified@test.com",
+  "password": "password2"
 }
 
 ### Login
 POST {{baseUrl}}/api/login
 
 {
-  "email": "user2@test.com",
-  "password": "password456"
+  "email": "user1@test.com",
+  "password": "password1"
 }
 
 ### Refresh
