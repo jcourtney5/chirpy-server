@@ -14,7 +14,7 @@ func (cfg *apiConfig) handlerChirpsGet(w http.ResponseWriter, r *http.Request) {
 	chirpIDString := r.PathValue("chirpID")
 	chirpID, err := uuid.Parse(chirpIDString)
 	if err != nil {
-		responseWithError(w, http.StatusBadRequest, "Invalid hirpID", err)
+		responseWithError(w, http.StatusBadRequest, "Invalid chirpID", err)
 		return
 	}
 
