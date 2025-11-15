@@ -86,11 +86,12 @@ Authorization: Bearer <token>
 
 ### Polka Webhook upgrade user
 POST {{baseUrl}}/api/polka/webhooks
+Authorization: ApiKey <api_key>
 
 {
     "event": "user.upgraded",
     "data": {
-        "user_id": "7645015b-5d72-490b-92f2-9583e76451df"
+        "user_id": "9a3d3969-7e3d-44b6-96ba-3ecd6bc42a13"
     }
 }
 

@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
+	"github.com/jcourtney5/chirpy-server/internal/auth"
 )
 
 // POST /api/polka/webhooks endpoint handler
@@ -24,6 +25,19 @@ func (cfg *apiConfig) handlerWebhooks(w http.ResponseWriter, r *http.Request) {
 	err := decoder.Decode(&params)
 	if err != nil {
 		responseWithError(w, http.StatusInternalServerError, "Error decoding parameters", err)
+		return
+	}
+
+	// Check the authorization header for the
+	apiKey, err := auth.GetAPIKey(r.Header)
+	if err != nil {
+		responseWithError(w, http.StatusUnauthorized, "Couldn't find ApiKey", err)
+		return
+	}
+
+	// validate the apiKey
+	if apiKey != cfg.polkaKey {
+		responseWithError(w, http.StatusUnauthorized, "Invalid ApiKey", nil)
 		return
 	}
 
