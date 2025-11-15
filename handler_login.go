@@ -9,8 +9,6 @@ import (
 	"github.com/jcourtney5/chirpy-server/internal/database"
 )
 
-const defaultExpiresInSeconds = 3600 // one hour
-
 // POST /api/login endpoint handler
 func (cfg *apiConfig) handlerLogin(w http.ResponseWriter, r *http.Request) {
 	type parameters struct {
@@ -71,10 +69,11 @@ func (cfg *apiConfig) handlerLogin(w http.ResponseWriter, r *http.Request) {
 	// send the response
 	responseWithJSON(w, http.StatusOK, response{
 		User: User{
-			ID:        user.ID,
-			CreatedAt: user.CreatedAt,
-			UpdatedAt: user.UpdatedAt,
-			Email:     user.Email,
+			ID:          user.ID,
+			CreatedAt:   user.CreatedAt,
+			UpdatedAt:   user.UpdatedAt,
+			Email:       user.Email,
+			IsChirpyRed: user.IsChirpyRed,
 		},
 		Token:        jwtToken,
 		RefreshToken: refreshToken,
