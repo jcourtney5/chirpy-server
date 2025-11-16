@@ -73,7 +73,7 @@ POST {{baseUrl}}/api/chirps
 }
 
 ### GET all chirps
-GET {{baseUrl}}/api/chirps
+GET {{baseUrl}}/api/chirps?sort=desc
 
 ### GET all chirps for a user
 GET {{baseUrl}}/api/chirps?author_id=8e04365c-ceed-45c1-a97c-d77bd712a0e3

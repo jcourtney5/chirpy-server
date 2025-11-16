@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"net/http"
+	"sort"
 
 	"github.com/google/uuid"
 	"github.com/jcourtney5/chirpy-server/internal/database"
@@ -43,7 +44,7 @@ func (cfg *apiConfig) handlerChirpsGet(w http.ResponseWriter, r *http.Request) {
 
 // GET /api/chirps endpoint handler
 func (cfg *apiConfig) handlerChirpsGetAll(w http.ResponseWriter, r *http.Request) {
-	// Get the option author_id
+	// Get the option author_id param
 	authorIDString := r.URL.Query().Get("author_id")
 
 	var dbChirps []database.Chirp
@@ -83,6 +84,21 @@ func (cfg *apiConfig) handlerChirpsGetAll(w http.ResponseWriter, r *http.Request
 			UserID:    dbChirp.UserID,
 		})
 	}
+
+	// Get the optional sort param
+	sortDirection := "asc"
+	sortDirectionParam := r.URL.Query().Get("sort")
+	if sortDirectionParam == "desc" {
+		sortDirection = "desc"
+	}
+
+	// sort the chirps
+	sort.Slice(chirps, func(i, j int) bool {
+		if sortDirection == "desc" {
+			return chirps[i].CreatedAt.After(chirps[j].CreatedAt)
+		}
+		return chirps[i].CreatedAt.Before(chirps[j].CreatedAt)
+	})
 
 	// Send the response
 	responseWithJSON(w, http.StatusOK, chirps)
