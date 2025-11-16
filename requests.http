@@ -75,6 +75,9 @@ POST {{baseUrl}}/api/chirps
 ### GET all chirps
 GET {{baseUrl}}/api/chirps
 
+### GET all chirps for a user
+GET {{baseUrl}}/api/chirps?author_id=8e04365c-ceed-45c1-a97c-d77bd712a0e3
+
 ### GET single chirp
 @chirpID = 92b62c89-d46d-4206-9c96-a9d38fa59e04
 GET {{baseUrl}}/api/chirps/{{chirpID}}

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
+	"github.com/jcourtney5/chirpy-server/internal/database"
 )
 
 // GET /api/chirps/{chirpID} endpoint handler
@@ -42,11 +43,33 @@ func (cfg *apiConfig) handlerChirpsGet(w http.ResponseWriter, r *http.Request) {
 
 // GET /api/chirps endpoint handler
 func (cfg *apiConfig) handlerChirpsGetAll(w http.ResponseWriter, r *http.Request) {
-	// Get all the chirps in the DB
-	dbChirps, err := cfg.db.GetChirps(r.Context())
-	if err != nil {
-		responseWithError(w, http.StatusInternalServerError, "Failed to get chirps", err)
-		return
+	// Get the option author_id
+	authorIDString := r.URL.Query().Get("author_id")
+
+	var dbChirps []database.Chirp
+	var err error
+
+	if authorIDString == "" {
+		// Get all the chirps in the DB
+		dbChirps, err = cfg.db.GetChirps(r.Context())
+		if err != nil {
+			responseWithError(w, http.StatusInternalServerError, "Failed to get chirps", err)
+			return
+		}
+	} else {
+		// convert string to ID
+		userID, err := uuid.Parse(authorIDString)
+		if err != nil {
+			responseWithError(w, http.StatusBadRequest, "Invalid author ID", err)
+			return
+		}
+
+		// Get all the chirps in the DB
+		dbChirps, err = cfg.db.GetChirpsForUser(r.Context(), userID)
+		if err != nil {
+			responseWithError(w, http.StatusInternalServerError, "Failed to get chirps", err)
+			return
+		}
 	}
 
 	// convert DB results to our Chirp struct
