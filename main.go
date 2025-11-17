@@ -13,13 +13,6 @@ import (
 	_ "github.com/lib/pq"
 )
 
-// sql: postgres://jessecourtney:@localhost:5432/chirpy?sslmode=disable
-// goose postgres "postgres://jessecourtney:@localhost:5432/chirpy?sslmode=disable" up
-// goose postgres "postgres://jessecourtney:@localhost:5432/chirpy?sslmode=disable" down
-
-// to run: go build -o out && ./out
-//     or: go run .
-
 const platformDev = "dev"
 
 type apiConfig struct {
